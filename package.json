@@ -1,0 +1,24 @@
+{
+  "name": "express.boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate express node.js server with unit tests",
+  "main": "app.js",
+  "dependencies": {
+    "bluebird": "^3.3.4",
+    "express": "^4.13.4",
+    "lodash": "^4.10.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3",
+    "superagent": "^1.8.3"
+  },
+  "scripts": {
+    "tdd": "mocha tests -w",
+    "test": "mocha tests",
+    "start": "node start"
+  },
+  "author": "Dmitriy Shykaliuk (dshykaljuk@gmail.com)",
+  "license": "ISC"
+}
