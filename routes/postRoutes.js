@@ -2,11 +2,11 @@
 var express = require('express');
 var router = express.Router();
 
-var dataStorage = require('../data/dataStorage');
+var postStorage = require('../data/postStorage');
 
 router.get('/', function(req, res) {
-	dataStorage
-	.getAllData()
+	postStorage
+	.getAllPosts()
 	.then(function(dataObjects) {
 		res.status(200);
 		res.send(dataObjects);
@@ -14,7 +14,7 @@ router.get('/', function(req, res) {
 	.catch(function(error) {
 		res.status(500);
 		res.send(error);
-	});	
+	});
 });
 
 module.exports = router;

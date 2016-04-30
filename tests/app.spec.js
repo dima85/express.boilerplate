@@ -5,7 +5,7 @@ var request = require('superagent');
 var chai = require('chai');
 var expect = chai.expect;
 var sinon = require('sinon');
-var dataStorage = require('../data/dataStorage');
+var postStorage = require('../data/postStorage');
 var Promise = require('bluebird');
 
 var port = 1111;
@@ -14,8 +14,8 @@ var server;
 
 describe('app tests', function () {
 	beforeEach(function (done) {
-		server = app.listen(port, done);		
-	});	
+		server = app.listen(port, done);
+	});
 	afterEach(function (done) {
 		server.close(done)
 	});
@@ -26,12 +26,12 @@ describe('app tests', function () {
 			var error;
 			var dataObjects = [{id: 1, name: 'hello'}, {id: 2, name: 'world!'}];
 			beforeEach(function (done) {
-				sinon.stub(dataStorage, 'getAllData', function() {
+				sinon.stub(postStorage, 'getAllPosts', function() {
 					return Promise.resolve(dataObjects);
 				});
 
 				request
-				.get(baseUrl + "/data")
+				.get(baseUrl + "/post")
 				.end(function(err, res) {
 					error = err;
 					response = res;
@@ -40,7 +40,7 @@ describe('app tests', function () {
 			});
 
 			afterEach(function () {
-				dataStorage.getAllData.restore();
+				postStorage.getAllPosts.restore();
 			});
 
 			it('Should not return error', function () {
@@ -71,12 +71,12 @@ describe('app tests', function () {
 			var error;
 
 			beforeEach(function (done) {
-				sinon.stub(dataStorage, 'getAllData', function() {
+				sinon.stub(postStorage, 'getAllPosts', function() {
 					return Promise.reject('Some error');
 				});
 
 				request
-				.get(baseUrl + '/data')
+				.get(baseUrl + '/post')
 				.end(function(err, res) {
 					error = err;
 					response = res;
@@ -85,7 +85,7 @@ describe('app tests', function () {
 			});
 
 			afterEach(function () {
-				dataStorage.getAllData.restore();
+				postStorage.getAllPosts.restore();
 			});
 
 			it('Should return error', function () {
@@ -96,6 +96,6 @@ describe('app tests', function () {
 				expect(response.status).to.equal(500);
 			});
 		});
-		
+
 	});
 });
